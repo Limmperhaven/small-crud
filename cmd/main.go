@@ -3,13 +3,15 @@ package main
 import (
 	"context"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"gitlab.digital-spirit.ru/study/artem_crud"
-	"gitlab.digital-spirit.ru/study/artem_crud/models"
-	"gitlab.digital-spirit.ru/study/artem_crud/pkg/handler"
-	"gitlab.digital-spirit.ru/study/artem_crud/pkg/repository"
-	"gitlab.digital-spirit.ru/study/artem_crud/pkg/service"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/handler"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/repository"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/repository/postgres"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/service"
 	"os"
 	"os/signal"
 	"syscall"
@@ -35,7 +37,7 @@ func main() {
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 
-	srv := new(artem_crud.Server)
+	srv := new(internal.Server)
 
 	go func() {
 		if err := srv.Run(viper.GetString("server.port"), handlers.InitRoutes()); err != nil {
@@ -58,7 +60,7 @@ func main() {
 }
 
 func initConfig() error {
-	viper.AddConfigPath("configs")
+	viper.AddConfigPath("internal/configs")
 	viper.SetConfigName("config")
 	return viper.ReadInConfig()
 }
@@ -67,6 +69,20 @@ func bindRepository() *repository.Repository {
 	switch viper.GetString("repository.type") {
 	case "in-memory":
 		return repository.NewInMemoryRepository(make(map[string]models.Record))
+	case "postgres":
+		db, err := postgres.NewPostgresDB(postgres.Config{
+			Host:     os.Getenv("DB_HOST"),
+			Port:     os.Getenv("DB_PORT"),
+			Username: os.Getenv("DB_USER"),
+			Password: os.Getenv("DB_PASSWORD"),
+			DBName:   os.Getenv("DB_NAME"),
+			SSLMode:  os.Getenv("DB_SSLMODE"),
+		})
+		if err != nil {
+			logrus.Fatalf("failed to initialize db: %s", err.Error())
+		}
+
+		return repository.NewPostgresRepository(db)
 	default:
 		return nil
 	}

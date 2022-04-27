@@ -1,8 +1,10 @@
 package repository
 
 import (
-	"gitlab.digital-spirit.ru/study/artem_crud/models"
-	"gitlab.digital-spirit.ru/study/artem_crud/pkg/repository/in-memory"
+	"github.com/jmoiron/sqlx"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/repository/in-memory"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/repository/postgres"
 )
 
 type Record interface {
@@ -20,5 +22,11 @@ type Repository struct {
 func NewInMemoryRepository(db map[string]models.Record) *Repository {
 	return &Repository{
 		Record: in_memory.NewRecordInMemory(db),
+	}
+}
+
+func NewPostgresRepository(db *sqlx.DB) *Repository {
+	return &Repository{
+		Record: postgres.NewRecordPostgres(db),
 	}
 }

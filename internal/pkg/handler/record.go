@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.digital-spirit.ru/study/artem_crud/models"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
 	"net/http"
 )
 
@@ -23,7 +23,7 @@ func (h *Handler) getRecordsByFilter(c *gin.Context) {
 }
 
 func (h *Handler) getRecordById(c *gin.Context) {
-	recordUid := c.Param("uid")
+	recordUid := c.Param("uuid")
 
 	record, err := h.services.GetById(recordUid)
 	if err != nil {
@@ -53,7 +53,7 @@ func (h *Handler) createRecord(c *gin.Context) {
 }
 
 func (h *Handler) updateRecord(c *gin.Context) {
-	recordUid := c.Param("uid")
+	recordUid := c.Param("uuid")
 
 	var input models.RecordInput
 	if err := c.BindJSON(&input); err != nil {
@@ -70,7 +70,7 @@ func (h *Handler) updateRecord(c *gin.Context) {
 }
 
 func (h *Handler) deleteRecord(c *gin.Context) {
-	recordUid := c.Param("uid")
+	recordUid := c.Param("uuid")
 
 	if err := h.services.Delete(recordUid); err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())

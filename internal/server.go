@@ -1,4 +1,4 @@
-package artem_crud
+package internal
 
 import (
 	"context"

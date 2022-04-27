@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.digital-spirit.ru/study/artem_crud/pkg/service"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/service"
 )
 
 type Handler struct {
@@ -19,10 +19,10 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	router.Use(h.setHeaders)
 
 	router.GET("/", h.getRecordsByFilter)
-	router.GET("/:uid", h.getRecordById)
+	router.GET("/:uuid", h.getRecordById)
 	router.POST("/", h.createRecord)
-	router.PUT("/:uid", h.updateRecord)
-	router.DELETE("/:uid", h.deleteRecord)
+	router.PUT("/:uuid", h.updateRecord)
+	router.DELETE("/:uuid", h.deleteRecord)
 
 	return router
 }

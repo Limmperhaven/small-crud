@@ -4,7 +4,7 @@ import (
 	"fmt"
 	uuid2 "github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
-	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
+	"gitlab.digital-spirit.ru/study/artem_crud/models"
 	"strings"
 )
 

@@ -3,7 +3,7 @@ package in_memory
 import (
 	"errors"
 	uuid2 "github.com/google/uuid"
-	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
+	"gitlab.digital-spirit.ru/study/artem_crud/models"
 	"sync"
 )
 

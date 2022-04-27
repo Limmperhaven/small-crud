@@ -1,8 +1,8 @@
 package service
 
 import (
-	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
-	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/repository"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/repository"
+	"gitlab.digital-spirit.ru/study/artem_crud/models"
 )
 
 type Record interface {

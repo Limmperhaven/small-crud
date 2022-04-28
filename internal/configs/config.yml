@@ -1,4 +1,6 @@
 server:
-  port: 8080
+  restPort: 8080
+  grpcPort: 9000
+  grpcNetwork: tcp
 repository:
   type: postgres

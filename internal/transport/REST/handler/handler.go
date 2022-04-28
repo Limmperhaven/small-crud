@@ -1,8 +1,8 @@
-package handler
+package restHandler
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/service"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/service"
 )
 
 type Handler struct {

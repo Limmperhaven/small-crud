@@ -85,6 +85,11 @@ func (r *RecordPostgres) GetByFilter(params models.RecordInput) ([]models.Record
 }
 
 func (r *RecordPostgres) Update(recordUid string, record models.RecordInput) error {
+	_, err := r.GetByUid(recordUid)
+	if err != nil {
+		return err
+	}
+
 	var setValues []string
 	var args []interface{}
 	argId := 1
@@ -119,13 +124,18 @@ func (r *RecordPostgres) Update(recordUid string, record models.RecordInput) err
 
 	args = append(args, recordUid)
 
-	_, err := r.db.Exec(query, args...)
+	_, err = r.db.Exec(query, args...)
 	return err
 }
 
 func (r *RecordPostgres) Delete(recordUid string) error {
+	_, err := r.GetByUid(recordUid)
+	if err != nil {
+		return err
+	}
+
 	query := fmt.Sprintf("DELETE FROM %s WHERE uuid=$1", recordsTable)
-	_, err := r.db.Exec(query, recordUid)
+	_, err = r.db.Exec(query, recordUid)
 
 	return err
 }

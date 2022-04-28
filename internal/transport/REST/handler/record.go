@@ -1,4 +1,4 @@
-package handler
+package restHandler
 
 import (
 	"github.com/gin-gonic/gin"

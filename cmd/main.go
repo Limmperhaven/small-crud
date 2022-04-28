@@ -6,12 +6,13 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"gitlab.digital-spirit.ru/study/artem_crud/internal"
 	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
-	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/handler"
-	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/repository"
-	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/repository/postgres"
-	"gitlab.digital-spirit.ru/study/artem_crud/internal/pkg/service"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/repository"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/repository/postgres"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/service"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/transport/REST"
+	restHandler "gitlab.digital-spirit.ru/study/artem_crud/internal/transport/REST/handler"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/transport/gRPC"
 	"os"
 	"os/signal"
 	"syscall"
@@ -35,13 +36,21 @@ func main() {
 			viper.GetString("repository.type"))
 	}
 	services := service.NewService(repos)
-	handlers := handler.NewHandler(services)
+	restHandlers := restHandler.NewHandler(services)
 
-	srv := new(internal.Server)
+	restsrv := new(REST.Server)
 
 	go func() {
-		if err := srv.Run(viper.GetString("server.port"), handlers.InitRoutes()); err != nil {
-			logrus.Fatalf("Error occured while running http server^: %s", err.Error())
+		if err := restsrv.Run(viper.GetString("server.restPort"), restHandlers.InitRoutes()); err != nil {
+			logrus.Fatalf("Error occured while running http server : %s", err.Error())
+		}
+	}()
+
+	grpcsrv := new(gRPC.Server)
+
+	go func() {
+		if err := grpcsrv.Run(viper.GetString("server.grpcNetwork"), viper.GetString("server.grpcPort"), services); err != nil {
+			logrus.Fatalf("Error occured while running gRPC server : %s", err.Error())
 		}
 	}()
 
@@ -53,7 +62,7 @@ func main() {
 
 	logrus.Println("App Shutting Down")
 
-	if err := srv.Shutdown(context.Background()); err != nil {
+	if err := restsrv.Shutdown(context.Background()); err != nil {
 		logrus.Errorf("error occured on server shutting down: %s", err.Error())
 	}
 

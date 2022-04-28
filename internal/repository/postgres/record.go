@@ -28,7 +28,7 @@ func (r *RecordPostgres) Create(record models.Record) (string, error) {
 	return uuid, err
 }
 
-func (r *RecordPostgres) GetByUid(recordUid string) (models.Record, error) {
+func (r *RecordPostgres) GetByUuid(recordUid string) (models.Record, error) {
 	var record models.Record
 
 	query := fmt.Sprintf("SELECT * FROM %s WHERE uuid=$1", recordsTable)
@@ -85,7 +85,7 @@ func (r *RecordPostgres) GetByFilter(params models.RecordInput) ([]models.Record
 }
 
 func (r *RecordPostgres) Update(recordUid string, record models.RecordInput) error {
-	_, err := r.GetByUid(recordUid)
+	_, err := r.GetByUuid(recordUid)
 	if err != nil {
 		return err
 	}
@@ -129,7 +129,7 @@ func (r *RecordPostgres) Update(recordUid string, record models.RecordInput) err
 }
 
 func (r *RecordPostgres) Delete(recordUid string) error {
-	_, err := r.GetByUid(recordUid)
+	_, err := r.GetByUuid(recordUid)
 	if err != nil {
 		return err
 	}

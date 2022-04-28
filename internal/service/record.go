@@ -17,8 +17,8 @@ func (s *RecordService) Create(record models.Record) (string, error) {
 	return s.repo.Create(record)
 }
 
-func (s *RecordService) GetById(recordUid string) (models.Record, error) {
-	return s.repo.GetByUid(recordUid)
+func (s *RecordService) GetByUuid(recordUid string) (models.Record, error) {
+	return s.repo.GetByUuid(recordUid)
 }
 
 func (s *RecordService) GetByFilter(params models.RecordInput) ([]models.Record, error) {

@@ -9,7 +9,7 @@ import (
 
 type Record interface {
 	Create(record models.Record) (string, error)
-	GetByUid(recordUid string) (models.Record, error)
+	GetByUuid(recordUid string) (models.Record, error)
 	GetByFilter(params models.RecordInput) ([]models.Record, error)
 	Update(recordUid string, record models.RecordInput) error
 	Delete(recordUid string) error

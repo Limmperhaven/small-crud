@@ -19,7 +19,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	router.Use(h.setHeaders)
 
 	router.GET("/", h.getRecordsByFilter)
-	router.GET("/:uuid", h.getRecordById)
+	router.GET("/:uuid", h.getRecordByUuid)
 	router.POST("/", h.createRecord)
 	router.PUT("/:uuid", h.updateRecord)
 	router.DELETE("/:uuid", h.deleteRecord)

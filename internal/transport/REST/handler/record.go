@@ -22,10 +22,10 @@ func (h *Handler) getRecordsByFilter(c *gin.Context) {
 	c.JSON(http.StatusOK, lists)
 }
 
-func (h *Handler) getRecordById(c *gin.Context) {
+func (h *Handler) getRecordByUuid(c *gin.Context) {
 	recordUid := c.Param("uuid")
 
-	record, err := h.services.GetById(recordUid)
+	record, err := h.services.GetByUuid(recordUid)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

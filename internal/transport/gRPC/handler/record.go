@@ -40,7 +40,7 @@ func (r *RecordHandler) Create(ctx context.Context, req *proto.RecordInput) (*pr
 }
 
 func (r *RecordHandler) GetByUuid(ctx context.Context, req *proto.Uuid) (*proto.Record, error) {
-	rec, err := r.services.GetById(req.Uuid)
+	rec, err := r.services.GetByUuid(req.Uuid)
 
 	return &proto.Record{
 		Uuid:        rec.Uuid,

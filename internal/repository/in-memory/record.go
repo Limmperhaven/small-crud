@@ -30,7 +30,7 @@ func (r *RecordInMemory) Create(record models.Record) (string, error) {
 	return uuid, nil
 }
 
-func (r *RecordInMemory) GetByUid(recordUid string) (models.Record, error) {
+func (r *RecordInMemory) GetByUuid(recordUid string) (models.Record, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 

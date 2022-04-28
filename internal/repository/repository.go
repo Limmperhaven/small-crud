@@ -2,9 +2,9 @@ package repository
 
 import (
 	"github.com/jmoiron/sqlx"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
 	"gitlab.digital-spirit.ru/study/artem_crud/internal/repository/in-memory"
 	"gitlab.digital-spirit.ru/study/artem_crud/internal/repository/postgres"
-	"gitlab.digital-spirit.ru/study/artem_crud/models"
 )
 
 type Record interface {

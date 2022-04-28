@@ -1,9 +1,9 @@
 package grpcHandler
 
 import (
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
 	"gitlab.digital-spirit.ru/study/artem_crud/internal/service"
 	"gitlab.digital-spirit.ru/study/artem_crud/internal/transport/gRPC/proto"
-	"gitlab.digital-spirit.ru/study/artem_crud/models"
 	"golang.org/x/net/context"
 )
 

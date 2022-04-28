@@ -6,13 +6,13 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
 	"gitlab.digital-spirit.ru/study/artem_crud/internal/repository"
 	"gitlab.digital-spirit.ru/study/artem_crud/internal/repository/postgres"
 	"gitlab.digital-spirit.ru/study/artem_crud/internal/service"
 	"gitlab.digital-spirit.ru/study/artem_crud/internal/transport/REST"
 	restHandler "gitlab.digital-spirit.ru/study/artem_crud/internal/transport/REST/handler"
 	"gitlab.digital-spirit.ru/study/artem_crud/internal/transport/gRPC"
-	"gitlab.digital-spirit.ru/study/artem_crud/models"
 	"os"
 	"os/signal"
 	"syscall"
@@ -69,7 +69,7 @@ func main() {
 }
 
 func initConfig() error {
-	viper.AddConfigPath("configs")
+	viper.AddConfigPath("internal/configs")
 	viper.SetConfigName("config")
 	return viper.ReadInConfig()
 }

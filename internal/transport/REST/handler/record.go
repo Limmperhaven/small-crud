@@ -2,7 +2,7 @@ package restHandler
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.digital-spirit.ru/study/artem_crud/models"
+	"gitlab.digital-spirit.ru/study/artem_crud/internal/models"
 	"net/http"
 )
 
